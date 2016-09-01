@@ -1,1 +1,84 @@
-<h1>Hello, World!</h1>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ACE in Action</title>
+        <style type="text/css" media="screen">
+            .top, .bot {
+                height: 50%;
+                box-sizing: border-box;
+            }
+
+            .left {
+                display: inline-block;
+                width: 33%;
+                height: 100%;
+                margin-right: -4px;
+                box-sizing: border-box;
+                float: left;
+            }
+
+            .right {
+                display: inline-block;
+                width: 66%;
+                height: 100%;
+                margin-right: -4px;
+                border: 1px solid red;
+                box-sizing: border-box;
+                float: right;
+            }
+
+            html, body {
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            #jsonEditor {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+
+            #leafEditor {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="left">
+            <div class="top">
+                    <div id="jsonEditor">
+{
+    "name": "World"
+}
+                    </div>
+            </div>
+
+            <!-- BOT 50% -->
+            <div class="bot">
+                    <div id="leafEditor">
+
+Hello, #(name)!
+
+                    </div>
+            </div>
+        </div>
+
+        <div class="right">
+            right side
+        </div>
+
+        <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script>
+            var jsonEditor = ace.edit("jsonEditor");
+            jsonEditor.setTheme("ace/theme/tomorrow");
+            jsonEditor.getSession().setMode("ace/mode/json");
+            var leafEditor = ace.edit("leafEditor");
+            leafEditor.setTheme("ace/theme/tomorrow_night");
+            leafEditor.getSession().setMode("ace/mode/abc");
+        </script>
+    </body>
+</html>
