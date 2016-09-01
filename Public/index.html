@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <title>ACE in Action</title>
         <style type="text/css" media="screen">
             .top, .bot {
@@ -22,7 +23,7 @@
                 width: 66%;
                 height: 100%;
                 margin-right: -4px;
-                border: 1px solid red;
+                /* border: 1px solid red; */
                 box-sizing: border-box;
                 float: right;
             }
@@ -31,6 +32,12 @@
                 height: 100%;
                 padding: 0;
                 margin: 0;
+            }
+
+            #renderFrame {
+                position: relative;
+                width: 100%;
+                height: 100%;
             }
 
             #jsonEditor {
@@ -68,7 +75,7 @@ Hello, #(name)!
         </div>
 
         <div class="right">
-            right side
+            <iframe width="100%" height="100%" id="renderFrame" src="" frameborder="0" allowfullscreen></iframe>
         </div>
 
         <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -76,9 +83,68 @@ Hello, #(name)!
             var jsonEditor = ace.edit("jsonEditor");
             jsonEditor.setTheme("ace/theme/tomorrow");
             jsonEditor.getSession().setMode("ace/mode/json");
+
+
             var leafEditor = ace.edit("leafEditor");
             leafEditor.setTheme("ace/theme/tomorrow_night");
             leafEditor.getSession().setMode("ace/mode/abc");
+
+
+/*
+jsonEditor.commands.addCommand({
+                               name: 'build',
+                               bindKey: {win: 'Ctrl-B',  mac: 'Command-B'},
+                               exec: function(editor) {
+
+                               alert(editor.getSession());
+                               var html_string=  "content";
+                               var d = document.getElementById('renderFrame')
+                               alert("asdf");
+
+                               document.getElementById('renderFrame').src = "data:text/html;charset=utf-8, " + escape(html_string);
+                               //...
+                               },
+                               readOnly: true // false if this command should not apply in readOnly mode
+                               });
+ */
+
+   jsonEditor.commands.addCommand({
+                                  name: 'ignore-save',
+                                  bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+                                  exec: function(editor) {
+
+                                  var json = jsonEditor.getSession()
+                                  var leaf = leafEditor.getSession()
+                                  console.log("js: " + json)
+                                  console.log("lf: " + leaf)
+                                  var body = {
+                                    "json": String(json),
+                                    "leaf": String(leaf)
+                                  }
+
+
+                                  $.ajax({
+                                         type: "POST",
+                                         url: "/render",
+                                         data: body
+                                         })
+                                  .done(function(response) {
+                                        var header = "data:text/html;charset=utf-8, "
+                                        var content = String(response)
+                                        document.getElementById('renderFrame').src = header + content;
+                                         })
+                                  .fail(function() {
+                                        alert("Failed");
+                                        });
+                                  //...
+                                  /*
+                                  var content = "<h1>Hello</h1> <h4>" + editor.getSession() + "World!</h4>"
+                                  document.getElementById('renderFrame').src = "data:text/html;charset=utf-8, " + content;
+                                   */
+                                  // "data:text/html;charset=utf-8," + escape(html_string);
+                                  },
+                                  readOnly: true // false if this command should not apply in readOnly mode
+                                  });
         </script>
     </body>
 </html>
