@@ -89,62 +89,89 @@ Hello, #(name)!
             leafEditor.setTheme("ace/theme/tomorrow_night");
             leafEditor.getSession().setMode("ace/mode/abc");
 
+            jsonEditor.commands.addCommand({
+                                           name: 'ignore-save',
+                                           bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+                                           exec: function(editor) {
+                                           //...
+                                           },
+                                           readOnly: true // false if this command should not apply in readOnly mode
+                                           });
 
-/*
-jsonEditor.commands.addCommand({
-                               name: 'build',
-                               bindKey: {win: 'Ctrl-B',  mac: 'Command-B'},
+                                           jsonEditor.commands.addCommand({
+                                                                          name: 'build',
+                                                                          bindKey: {win: 'Ctrl-B',  mac: 'Command-B'},
+                                                                          exec: function(editor) {
+
+                                                                          var json = jsonEditor.getSession()
+                                                                          var leaf = leafEditor.getSession()
+                                                                          console.log("js: " + json)
+                                                                          console.log("lf: " + leaf)
+                                                                          var body = {
+                                                                          "json": String(json),
+                                                                          "leaf": String(leaf)
+                                                                          }
+
+
+                                                                          $.ajax({
+                                                                                 type: "POST",
+                                                                                 url: "/render",
+                                                                                 data: body
+                                                                                 })
+                                                                          .done(function(response) {
+                                                                                var header = "data:text/html;charset=utf-8, "
+                                                                                var content = String(response)
+                                                                                document.getElementById('renderFrame').src = header + content;
+                                                                                })
+                                                                          .fail(function() {
+                                                                                alert("Failed");
+                                                                                });
+                                                                          },
+                                                                          readOnly: true // false if this command should not apply in readOnly mode
+                                                                          });
+
+
+
+leafEditor.commands.addCommand({
+                               name: 'ignore-save',
+                               bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
                                exec: function(editor) {
-
-                               alert(editor.getSession());
-                               var html_string=  "content";
-                               var d = document.getElementById('renderFrame')
-                               alert("asdf");
-
-                               document.getElementById('renderFrame').src = "data:text/html;charset=utf-8, " + escape(html_string);
                                //...
                                },
                                readOnly: true // false if this command should not apply in readOnly mode
                                });
- */
 
-   jsonEditor.commands.addCommand({
-                                  name: 'ignore-save',
-                                  bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
-                                  exec: function(editor) {
+                               leafEditor.commands.addCommand({
+                                                              name: 'build',
+                                                              bindKey: {win: 'Ctrl-B',  mac: 'Command-B'},
+                                                              exec: function(editor) {
 
-                                  var json = jsonEditor.getSession()
-                                  var leaf = leafEditor.getSession()
-                                  console.log("js: " + json)
-                                  console.log("lf: " + leaf)
-                                  var body = {
-                                    "json": String(json),
-                                    "leaf": String(leaf)
-                                  }
+                                                              var json = jsonEditor.getSession()
+                                                              var leaf = leafEditor.getSession()
+                                                              console.log("js: " + json)
+                                                              console.log("lf: " + leaf)
+                                                              var body = {
+                                                              "json": String(json),
+                                                              "leaf": String(leaf)
+                                                              }
 
 
-                                  $.ajax({
-                                         type: "POST",
-                                         url: "/render",
-                                         data: body
-                                         })
-                                  .done(function(response) {
-                                        var header = "data:text/html;charset=utf-8, "
-                                        var content = String(response)
-                                        document.getElementById('renderFrame').src = header + content;
-                                         })
-                                  .fail(function() {
-                                        alert("Failed");
-                                        });
-                                  //...
-                                  /*
-                                  var content = "<h1>Hello</h1> <h4>" + editor.getSession() + "World!</h4>"
-                                  document.getElementById('renderFrame').src = "data:text/html;charset=utf-8, " + content;
-                                   */
-                                  // "data:text/html;charset=utf-8," + escape(html_string);
-                                  },
-                                  readOnly: true // false if this command should not apply in readOnly mode
-                                  });
+                                                              $.ajax({
+                                                                     type: "POST",
+                                                                     url: "/render",
+                                                                     data: body
+                                                                     })
+                                                              .done(function(response) {
+                                                                    var header = "data:text/html;charset=utf-8, "
+                                                                    var content = String(response)
+                                                                    document.getElementById('renderFrame').src = header + content;
+                                                                    })
+                                                              .fail(function() {
+                                                                    alert("Failed");
+                                                                    });
+                                                              },
+                                                              readOnly: true // false if this command should not apply in readOnly mode
+                                                              });
         </script>
     </body>
 </html>

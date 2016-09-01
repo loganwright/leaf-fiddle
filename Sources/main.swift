@@ -1,9 +1,12 @@
 import Vapor
 import Leaf
+import HTTP
 
 let port = Env.get("PORT")?.int ?? 8080
 let config = Config(["servers": ["leaf-fiddle": [ "port": Node(port)]]])
 let drop = Droplet(config: config)
+
+drop.get { _ in return Response(redirect: "/index.html") }
 
 drop.post("render") { request in
     guard
