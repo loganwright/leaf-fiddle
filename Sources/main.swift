@@ -2,7 +2,7 @@ import Vapor
 import Leaf
 import HTTP
 
-let port = Env.get("PORT")?.int ?? 8080
+let port = Env.get("PORT")?.int ?? 9000
 let config = Config(["servers": ["leaf-fiddle": [ "port": Node(port)]]])
 let drop = Droplet(config: config)
 
