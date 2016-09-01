@@ -1,10 +1,10 @@
-ace.define("ace/mode/sql_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module) {
+ace.define("ace/mode/leaf_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module) {
            "use strict";
 
            var oop = require("../lib/oop");
            var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
-           var SqlHighlightRules = function() {
+           var LeafHighlightRules = function() {
 
            var keywords = (
                            "select|insert|update|delete|from|where|and|or|group|by|order|limit|offset|having|as|case|" +
@@ -77,21 +77,21 @@ ace.define("ace/mode/sql_highlight_rules",["require","exports","module","ace/lib
            this.normalizeRules();
            };
            
-           oop.inherits(SqlHighlightRules, TextHighlightRules);
+           oop.inherits(LeafHighlightRules, TextHighlightRules);
            
-           exports.SqlHighlightRules = SqlHighlightRules;
+           exports.LeafHighlightRules = LeafHighlightRules;
            });
 
-ace.define("ace/mode/sql",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/sql_highlight_rules","ace/range"], function(require, exports, module) {
+ace.define("ace/mode/leaf",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/leaf_highlight_rules","ace/range"], function(require, exports, module) {
            "use strict";
            
            var oop = require("../lib/oop");
            var TextMode = require("./text").Mode;
-           var SqlHighlightRules = require("./sql_highlight_rules").SqlHighlightRules;
+           var LeafHighlightRules = require("./leaf_highlight_rules").LeafHighlightRules;
            var Range = require("../range").Range;
            
            var Mode = function() {
-           this.HighlightRules = SqlHighlightRules;
+           this.HighlightRules = LeafHighlightRules;
            };
            oop.inherits(Mode, TextMode);
            
@@ -99,7 +99,7 @@ ace.define("ace/mode/sql",["require","exports","module","ace/lib/oop","ace/mode/
             
             this.lineCommentStart = "--";
             
-            this.$id = "ace/mode/sql";
+            this.$id = "ace/mode/leaf";
             }).call(Mode.prototype);
            
            exports.Mode = Mode;
