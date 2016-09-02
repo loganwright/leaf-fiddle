@@ -59,7 +59,7 @@
             <div class="top">
                     <div id="jsonEditor">
 {
-    "name": "World"
+    "message": "enter an editor and press CMD + B to render."
 }
                     </div>
             </div>
@@ -67,11 +67,7 @@
             <!-- BOT 50% -->
             <div class="bot">
                     <div id="leafEditor">
-Hello, #(name)
-
-#loop(friends, "friend") {
-    Hi #(friend.name)
-}
+Welcome to Leaf, #(message)
                     </div>
             </div>
         </div>
@@ -107,8 +103,6 @@ Hello, #(name)
 
                                                                           var json = jsonEditor.getSession()
                                                                           var leaf = leafEditor.getSession()
-                                                                          console.log("js: " + json)
-                                                                          console.log("lf: " + leaf)
                                                                           var body = {
                                                                           "json": String(json),
                                                                           "leaf": String(leaf)
@@ -150,8 +144,6 @@ leafEditor.commands.addCommand({
 
                                                               var json = jsonEditor.getSession()
                                                               var leaf = leafEditor.getSession()
-                                                              console.log("js: " + json)
-                                                              console.log("lf: " + leaf)
                                                               var body = {
                                                               "json": String(json),
                                                               "leaf": String(leaf)
